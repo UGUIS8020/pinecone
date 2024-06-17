@@ -1,14 +1,12 @@
 from langchain.schema import Document
 from langchain_community.document_loaders import DirectoryLoader
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_openai import OpenAIEmbeddings
 
-from langchain.vectorstores import Pinecone
+import pinecone
 
 from dotenv import load_dotenv
 import os
-from pinecone import Pinecone
-
 
 
 load_dotenv()
@@ -20,7 +18,7 @@ pinecone_environment = os.getenv('PINECONE_ENVIRONMENT')
 splitter = CharacterTextSplitter(separator="。", chunk_size=100, chunk_overlap=0)
 
 # テキストデータ読み込み
-raw_text = DirectoryLoader(path="./src", glob="xjapan.txt").load()
+raw_text = DirectoryLoader(path="data/", glob="**/*.txt").load()
 print(raw_text)
 
 split_documents_by_file = {}
